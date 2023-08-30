@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Mahasiswa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+    
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+    
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container ">
+        <div class="row justify-content-center">
+            <div class="col-md-5 border rounded mt-2">
+                <h2 class="text-center">Hitung Nilai Rata-rata</h2>
+                <form id="nilaiForm">
+                    <label for="nama"><b>Nama:</b></label>
+                    <input type="text" id="nama" name="nama" required><br><br>
+
+                    <label for="mata_kuliah"><b>Mata Kuliah:</b></label>
+                    <input type="text" id="mata_kuliah" name="mata_kuliah" required><br><br>
+
+                    <label for="grade"><b>Grade:</b></label><br>
+                    <select id="grade" name="grade" required style="width: 450px;">
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select><br><br>
+
+                    <input type="button" value="Hitung" onclick="tambahNilai()"><br><br>
+                </form>
+                <table id="tabelNilai">
+                    <thead>
+                        <tr>
+                            <th>Nama</th>
+                            <th>Mata Kuliah</th>
+                            <th>Grade</th>
+                            <th>Nilai</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data nilai akan ditampilkan di sini -->
+                    </tbody>
+                </table>
+                <script>
+                    var nilaiData = [];
+            
+                    function tambahNilai() {
+                        var nama = document.getElementById("nama").value;
+                        var mataKuliah = document.getElementById("mata_kuliah").value;
+                        var grade = document.getElementById("grade").value;
+                        var nilai = hitungNilai(grade);
+            
+                        nilaiData.push({
+                            nama: nama,
+                            mataKuliah: mataKuliah,
+                            grade: grade,
+                            nilai: nilai
+                        });
+            
+                        tampilkanTabel();
+                    }
+            
+                    function hitungNilai(grade) {
+                        if (grade === 'A') return 4.00;
+                        else if (grade === 'B') return 3.00;
+                        else if (grade === 'C') return 2.00;
+                        else if (grade === 'D') return 1.00;
+                        else return 0.00;
+                    }
+            
+                    function tampilkanTabel() {
+                        var tabel = document.getElementById("tabelNilai");
+                        var tbody = tabel.querySelector("tbody");
+                        tbody.innerHTML = '';
+            
+                        for (var i = 0; i < nilaiData.length; i++) {
+                            var row = tbody.insertRow(i);
+                            var cellNama = row.insertCell(0);
+                            var cellMataKuliah = row.insertCell(1);
+                            var cellGrade = row.insertCell(2);
+                            var cellNilai = row.insertCell(3);
+            
+                            cellNama.innerHTML = nilaiData[i].nama;
+                            cellMataKuliah.innerHTML = nilaiData[i].mataKuliah;
+                            cellGrade.innerHTML = nilaiData[i].grade;
+                            cellNilai.innerHTML = nilaiData[i].nilai;
+                        }
+                    }
+                </script>
+</body>
+</html>
